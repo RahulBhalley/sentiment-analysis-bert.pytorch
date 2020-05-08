@@ -12,13 +12,17 @@ We used IMDB dataset instead of using some specific hate speech dataset. Surpris
 
 ## Results
 
-Test accuracy:
+Train accuracy: 93.17%
 
-Test loss: 
+Train loss: 0.180
 
-Validation accuracy: 
+Test accuracy: 92.24%
 
-Validation loss: 
+Test loss: 0.198
+
+Validation accuracy: 91.26%
+
+Validation loss: 0.219
 
 ## How to run this code
 
