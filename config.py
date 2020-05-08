@@ -11,4 +11,4 @@ N_LAYERS = 2
 BIDIRECTIONAL = True
 DROPOUT = 0.25
 
-TEXT = "I don't like your attitude!"
+TEXT = "I hate you!"

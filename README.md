@@ -71,4 +71,10 @@ Following is a list of settings and their descriptions:
 
 For example, to make sentiment predictions (i.e. inference) simply set `TRAIN = False` in `config.py`. Also provide the text to `TEXT` variable in `config.py`. This will load the trained parameters `model.pt` and make prediction.
 
+**Note**: The output closer to `1` means hate speech whereas in case of close to `0` means the content of text is good/happy.
+
+For `TEXT = 'I like you!'`, the sentiment is closer to `0` (exactly `0.13519087433815002`). 
+
+But when `TEXT = 'I hate you!'` then the sentiment is close to `1` (exactly `0.7887630462646484`).
+
 In order to train the model just keep `TRAIN = True` in `config.py` and run `python3 main.py`.
