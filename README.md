@@ -10,6 +10,11 @@ The pretrained model was loaded from Hugging Faces' `transforemrs`. Then a two l
 
 We used IMDB dataset instead of using some specific hate speech dataset. Surprisingly the model still nicely classifies the hate speech.
 
+### Future work
+1. Training on an actual hate speech (text) dataset, instead of IMDB sentiment dataset, will give better accuracy for predicting sentiment of hate speech.
+1. This BERT model can be trained longer to see if the accuracy improves further.
+3. One can choose to train some other recent SOTA Transformer models such as Longformer, Electra, etc. for sentiment classification.
+
 ## Results
 
 Train accuracy: 93.17%
