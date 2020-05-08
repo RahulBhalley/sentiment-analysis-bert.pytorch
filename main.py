@@ -195,7 +195,7 @@ def predict_sentiment(model, tokenizer, sentence):
   return prediction.item()
 
 if __name__ == "__main__":
-  
+  # Train BERT
   if TRAIN:
     # load data
     train_iter, valid_iter, test_iter = load_data()
@@ -207,30 +207,31 @@ if __name__ == "__main__":
     best_val_loss = float('inf')
 
     for epoch in range(N_EPOCHS):
-    
+      # start time
       start_time = time.time()
-      
+      # train for an epoch
       train_loss, train_acc = train(model, train_iter, optimizer, criterion)
       valid_loss, valid_acc = evaluate(model, valid_iter, criterion)
-      
+      # end time
       end_time = time.time()
-      
+      # stats
       epoch_mins, epoch_secs = epoch_time(start_time, end_time)
-      
+      # save model if has validation loss
+      # better than last one
       if valid_loss < best_valid_loss:
         best_valid_loss = valid_loss
         torch.save(model.state_dict(), 'model.pt')
-      
+      # stats
       print(f'Epoch: {epoch+1:02} | Epoch Time: {epoch_mins}m {epoch_secs}s')
       print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
       print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc*100:.2f}%')
-    
     # Test
     model.load_state_dict(torch.load('model.pt'))
     test_loss, test_acc = evaluate(model, test_iter, criterion)
     print(f'Test Loss: {test_loss:.3f} | Test Acc: {test_acc*100:.2f}%')
-
-  else: # for inference
+  
+  # Infer from BERT
+  else:
     model.load_state_dict(torch.load('model.pt'))
     sentiment = predict_sentiment(model, tokenizer, TEXT)
     print(sentiment)
