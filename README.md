@@ -10,7 +10,7 @@ The pretrained model was loaded from Hugging Faces' `transforemrs`. Then a two l
 
 We used IMDB dataset instead of using some specific hate speech dataset. Surprisingly the model still nicely classifies the hate speech.
 
-## Results:
+## Results
 
 Test accuracy:
 Test loss: 
