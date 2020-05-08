@@ -35,16 +35,15 @@ Following is a list of settings and their descriptions:
 
 - `TRAIN`: set `True` to train BERT model but for inference set it to `False`
 - `TEXT`: a string whose sentiment is predicted when infering the model
-- `BATCH_SIZE`: batch size of train examples to use during training.
-- `N_EPOCHS`: total epochs to train the model for.
-- `SEED`: the seed value to make experiments reproducible.
+- `BATCH_SIZE`: (default: 128) batch size of train examples to use during training.
+- `N_EPOCHS`: (default: 05) total epochs to train the model for.
+- `SEED`: (default: 12345) the seed value to make experiments reproducible.
+- `BIDIRECTIONAL`: set `True` for bidirectional `nn.GRU` otherwise `False`.
+- `HIDDEN_DIM`: (default: 256)hidden dimensions for `nn.GRU`.
+- `OUTPUT_DIM`: (default: 1, don't change) since sentiment is binary output.
+- `N_LAYERS`: (default: 2) number of layers of `nn.GRU` layer.
+- `DROPOUT`: (default: 0.25) dropout rate.
 
-To make sentiment predictions (i.e. inference) simply set `TRAIN = False` in `config.py`. Also provide the text to `TEXT` variable in `config.py`. And run the following code:
+For example, to make sentiment predictions (i.e. inference) simply set `TRAIN = False` in `config.py`. Also provide the text to `TEXT` variable in `config.py`. This will load the trained parameters `model.pt` and make prediction.
 
-
-
-This will output the sentiment of this sentence.
-
-### Train
-
-Keep `TRAIN = True` in `config.py` and run `python3 main.py`
+In order to train the model just keep `TRAIN = True` in `config.py` and run `python3 main.py`.
