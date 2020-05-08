@@ -13,8 +13,11 @@ We used IMDB dataset instead of using some specific hate speech dataset. Surpris
 ## Results
 
 Test accuracy:
+
 Test loss: 
+
 Validation accuracy: 
+
 Validation loss: 
 
 ## How to run this code
