@@ -81,40 +81,45 @@ bert_model = BertModel.from_pretrained('bert-base-uncased')
 # Sentiment model containing pretrained BERT as backbone
 # and two-GRU layers for analyzing the BERT hidden representation
 # and a linear layer for classfification (the sigmoid is applied by the criterion during training).
-class SentimentModel(nn.Module):
+import torch.nn as nn
 
+class SentimentModel(nn.Module):
   def __init__(
     self,
-    bert_model,
-    hidden_size,
-    output_size,
-    num_layers,
+    bert,
+    hidden_dim,
+    output_dim,
+    n_layers,
     bidirectional,
     dropout
   ):
+      
     super(SentimentModel, self).__init__()
-
-    self.bert_model = bert_model
-    embed_size = bert_model.config.to_dict()['hidden_size']
+    
+    self.bert = bert
+    embedding_dim = bert.config.to_dict()['hidden_size']
     self.rnn = nn.GRU(
-      embed_size,
-      hidden_size,
-      num_layers=num_layers,
+      embedding_dim,
+      hidden_dim,
+      num_layers=n_layers,
       bidirectional=bidirectional,
       batch_first=True,
-      dropout=0 if num_layers < 2 else dropout
+      dropout=0 if n_layers < 2 else dropout
     )
-    self.out = nn.Linear(hidden_size * 2 if bidirectional else hidden_size, output_size)
+    self.out = nn.Linear(hidden_dim * 2 if bidirectional else hidden_dim, output_dim)
     self.dropout = nn.Dropout(dropout)
-
+      
   def forward(self, text):
     with torch.no_grad():
-      embeds = self.bert_model(text)[0]
-    _, hidden = self.rnn(embeds)
+      embedded = self.bert(text)[0]
+            
+    _, hidden = self.rnn(embedded)
+    
     if self.rnn.bidirectional:
       hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
     else:
       hidden = self.dropout(hidden[-1,:,:])
+    
     output = self.out(hidden)
     return output
 
@@ -232,6 +237,6 @@ if __name__ == "__main__":
   
   # Infer from BERT
   else:
-    model.load_state_dict(torch.load('model.pt'))
+    model.load_state_dict(torch.load('model.pt', map_location=device))
     sentiment = predict_sentiment(model, tokenizer, TEXT)
     print(sentiment)
